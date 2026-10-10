@@ -1,0 +1,139 @@
+{
+  "theme_identity": {
+    "name": "FIFA 19 Career Mode & FUT Web Hybrid Theme",
+    "description": "Inspired directly by FIFA 19 Career Mode 'Office' grid panels and FUT Web Companion aesthetics. Features a deep navy/royal blue gradient canvas, sharp uppercase tile header bars, neon cyan and magenta light streak accents, condensed high-impact typography, and dense stats presentation.",
+    "context_type": "Dashboard & Football Analytics SaaS"
+  },
+  "colors": {
+    "background": {
+      "app": "linear-gradient(135deg, #05081E 0%, #0A0F33 50%, #080C28 100%)",
+      "app_solid": "#070B26",
+      "surface_dark": "#0D143C",
+      "surface_card": "#101848",
+      "surface_elevated": "#15205B",
+      "panel_header": "#1A265E",
+      "navbar": "rgba(7, 11, 38, 0.92)"
+    },
+    "borders": {
+      "default": "#22336E",
+      "subtle": "#182552",
+      "highlight": "#314999",
+      "accent_pink": "#FF0055",
+      "accent_cyan": "#00F2FE"
+    },
+    "accents": {
+      "primary_cyan": "#00F2FE",
+      "secondary_pink": "#FF0055",
+      "pitch_green": "#00E070",
+      "fut_gold": "#E6B800",
+      "fut_card_gold": "linear-gradient(180deg, #EAD07C 0%, #9E7822 100%)",
+      "negative_red": "#FF3B30",
+      "positive_green": "#00E070"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#9BB0E5",
+      "muted": "#5C73B0",
+      "inverse": "#070B26",
+      "brand_title": "#00F2FE"
+    },
+    "position_badges": {
+      "GK": { "bg": "#3A2A00", "text": "#FFC107", "border": "#8A6600" },
+      "DEF": { "bg": "#002B49", "text": "#00B4D8", "border": "#006699" },
+      "MID": { "bg": "#220038", "text": "#B388FF", "border": "#6200EA" },
+      "FWD": { "bg": "#3B0014", "text": "#FF4081", "border": "#C2185B" }
+    },
+    "charts": {
+      "cyan": "#00F2FE",
+      "pink": "#FF0055",
+      "green": "#00E070",
+      "gold": "#FFB800",
+      "purple": "#9D4EDD",
+      "blue": "#3A86EF",
+      "grid_lines": "#1C2A5C",
+      "tooltip_bg": "#0A0F33"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "display_condensed": "'Barlow Condensed', 'Rajdhani', sans-serif",
+      "body": "'DM Sans', 'Inter', sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "rules": {
+      "headers": "Use uppercase font-black tracking-wider condensed style for all panel headers, tab items, and card titles.",
+      "hero_title": "text-4xl sm:text-5xl font-black uppercase tracking-tight text-white",
+      "section_header": "text-xl sm:text-2xl font-extrabold uppercase tracking-wide text-white flex items-center gap-2",
+      "tile_header": "bg-[#182459] px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-100 flex items-center justify-between border-b border-[#263878]",
+      "stat_value": "font-black tracking-tight text-white font-mono"
+    }
+  },
+  "layout_and_grid": {
+    "dashboard_office_grid": {
+      "description": "FIFA 19 Career Mode 'Office' grid with sharp rectangular tiles, uppercase header banners, and high-density stats.",
+      "layout_mode": "Grid system: grid-cols-1 md:grid-cols-12 gap-5",
+      "tiles": [
+        { "name": "KPI Summary (Advance)", "span": "col-span-12 lg:col-span-8", "header": "ADVANCE / CAREER OVERVIEW" },
+        { "name": "Board Expectations (Rating Badge)", "span": "col-span-12 sm:col-span-6 lg:col-span-4", "header": "BOARD EXPECTATIONS" },
+        { "name": "Bargain Inbox", "span": "col-span-12 sm:col-span-6 lg:col-span-4", "header": "SCOUTING INBOX / BARGAINS" },
+        { "name": "Top Market Values", "span": "col-span-12 lg:col-span-8", "header": "VALUATION STANDINGS" },
+        { "name": "Finances Total", "span": "col-span-12 sm:col-span-6 lg:col-span-4", "header": "FINANCIAL SUMMARY" },
+        { "name": "Featured Matchup", "span": "col-span-12 sm:col-span-6 lg:col-span-8", "header": "NEXT MATCHUP / COMPARISON" }
+      ]
+    },
+    "tile_style": "bg-[#0F1744] border border-[#22336E] shadow-xl overflow-hidden rounded-none hover:border-[#334A9C] transition-colors"
+  },
+  "components": {
+    "navbar": {
+      "style": "sticky top-0 z-50 bg-[#080D2D]/95 backdrop-blur-md border-b border-[#1E2E6B] px-4 py-3",
+      "tabs": "uppercase tracking-wider font-bold text-xs sm:text-sm px-3 py-1.5 transition-all cursor-pointer",
+      "active_tab": "bg-white text-[#080D2D] font-extrabold rounded-none shadow-[0_0_12px_rgba(255,255,255,0.4)]",
+      "inactive_tab": "text-slate-300 hover:text-white hover:bg-[#152152]"
+    },
+    "cards": {
+      "office_panel": "rounded-none border border-[#22336E] bg-[#0E1540] flex flex-col",
+      "panel_header_bar": "bg-gradient-to-r from-[#182459] to-[#131C47] border-b border-[#253775] px-4 py-2.5 flex items-center justify-between text-xs font-black uppercase tracking-widest text-white",
+      "fut_card": "bg-gradient-to-b from-[#221C0E] via-[#3B3016] to-[#120F08] border-2 border-[#D4AF37] text-white p-3 font-mono shadow-2xl relative"
+    },
+    "squad_builder": {
+      "pitch_bg": "relative bg-gradient-to-b from-[#092215] via-[#0D301E] to-[#081B10] border-2 border-[#1B5233] p-6 min-h-[580px] overflow-hidden rounded-sm",
+      "pitch_lines": "absolute inset-0 border border-white/20 pointer-events-none rounded-sm",
+      "budget_bar": "bg-[#090E2E] border border-[#22336E] p-4 flex flex-col sm:flex-row justify-between items-center gap-4"
+    },
+    "compare_social_card": {
+      "dimensions": "1200px x 630px aspect ratio preview",
+      "bg": "bg-gradient-to-br from-[#060920] via-[#0E1642] to-[#080B26] p-8 border-4 border-[#00F2FE]/40 relative overflow-hidden",
+      "watermark": "text-8xl font-black text-white/5 absolute -right-6 -bottom-6 pointer-events-none select-none"
+    }
+  },
+  "testing": {
+    "data_testid_rules": "All interactive elements (tabs, filters, search inputs, profile buttons, squad builder slots, export buttons) MUST have data-testid attributes.",
+    "key_test_ids": [
+      "nav-item-office",
+      "nav-item-players",
+      "nav-item-squad-builder",
+      "nav-item-compare",
+      "nav-item-predictor",
+      "player-search-input",
+      "player-filter-position",
+      "player-row-profile-btn",
+      "export-compare-card-button",
+      "export-scouting-pdf-button",
+      "squad-budget-input"
+    ]
+  },
+  "image_urls": {
+    "stadium_bg": "https://images.unsplash.com/photo-1705593973313-75de7bf95b56?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "stadium_pitch_lights": "https://images.unsplash.com/photo-1676746610993-fa0c050d1f6d?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "soccer_player_action_1": "https://images.unsplash.com/photo-1517466787929-bc90951d0974?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "soccer_player_action_2": "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "instructions_to_main_agent": [
+    "Apply the FIFA 19 Career Mode & FUT Web palette across App.js, Dashboard.jsx, Navbar.jsx, and all page components.",
+    "Maintain the sharp rectangular panel design with uppercase header bars for the Dashboard 'Office' layout.",
+    "Ensure all Recharts charts utilize cyan (#00F2FE), pink (#FF0055), green (#00E070), and gold (#FFB800) series colors on deep blue canvas backgrounds.",
+    "Include mandatory data-testid attributes on all interactive UI controls.",
+    "Implement squad builder pitch view and shareable compare image card with FUT card styling.",
+    "Keep navigation clear and fully responsive with desktop tab list and mobile drawer."
+  ]
+}

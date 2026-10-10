@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------
+   FIFA 19 Analytics — global theme
+   -------------------------------------------------------------- */
+@layer base {
+    :root {
+        /* Amazon-inspired navy, slate and warm orange */
+        --background: 216 28% 8%;
+        --foreground: 210 20% 96%;
+        --card: 213 25% 13%;
+        --card-foreground: 210 20% 96%;
+        --popover: 213 25% 12%;
+        --popover-foreground: 210 20% 96%;
+        --primary: 35 100% 50%;
+        --primary-foreground: 216 28% 8%;
+        --secondary: 213 24% 18%;
+        --secondary-foreground: 210 20% 96%;
+        --muted: 213 22% 20%;
+        --muted-foreground: 214 14% 68%;
+        --accent: 35 100% 50%;
+        --accent-foreground: 216 28% 8%;
+        --destructive: 4 100% 60%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 213 20% 25%;
+        --input: 213 20% 25%;
+        --ring: 35 100% 50%;
+        --radius: 0.6rem;
+
+        /* Shared legacy tokens now map to the warm orange accent */
+        --pitch-green: 35 100% 50%;
+        --pitch-glow: 38 100% 58%;
+        --pitch-dark: 213 25% 15%;
+        --fifa-pink: 25 100% 55%;
+        --fifa-green: 148 62% 43%;
+        --chalk: 0 0% 100%;
+        --ink: 216 28% 8%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        background: #0f1720;
+        color-scheme: dark;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'DM Sans', system-ui, sans-serif;
+        background: linear-gradient(135deg, #0d141c 0%, #131d27 52%, #0f1720 100%) fixed;
+        color: hsl(var(--foreground));
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background:
+            radial-gradient(ellipse at 88% 8%, rgba(255, 153, 0, 0.12), transparent 34%),
+            radial-gradient(ellipse at 8% 90%, rgba(74, 104, 133, 0.12), transparent 42%),
+            linear-gradient(135deg, #0d141c 0%, #131d27 52%, #0f1720 100%);
+    }
+
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.05;
+        background-image:
+            linear-gradient(rgba(176, 190, 204, 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(176, 190, 204, 0.12) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: radial-gradient(ellipse at center, black 20%, transparent 78%);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Barlow Condensed', 'Rajdhani', sans-serif;
+        letter-spacing: 0.01em;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .font-display {
+        font-family: 'Barlow Condensed', 'Rajdhani', sans-serif;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+    }
+
+    .font-mono {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+    }
+}
+
+/* --------------------------------------------------------------
+   Utility classes
+   -------------------------------------------------------------- */
+@layer components {
+    .office-hero {
+        isolation: isolate;
+        border-bottom: 1px solid rgba(169, 184, 198, 0.12);
+        background:
+            radial-gradient(ellipse at 78% 46%, rgba(255, 153, 0, 0.16), transparent 30%),
+            linear-gradient(108deg, rgba(15, 23, 32, 0.98) 0%, rgba(25, 38, 50, 0.92) 55%, rgba(15, 23, 32, 0.98) 100%);
+    }
+
+    .office-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: min(45%, 560px);
+        z-index: -1;
+        opacity: 0.56;
+        background:
+            linear-gradient(132deg, transparent 0 36%, rgba(255, 153, 0, 0.12) 36.2% 36.8%, transparent 37%),
+            linear-gradient(132deg, transparent 0 44%, rgba(255, 255, 255, 0.05) 44.2% 44.6%, transparent 44.8%),
+            radial-gradient(ellipse at 72% 55%, rgba(68, 95, 118, 0.34), transparent 68%);
+        pointer-events: none;
+    }
+
+    .office-hero > div {
+        position: relative;
+        z-index: 1;
+    }
+
+    .metric-card {
+        position: relative;
+        overflow: hidden;
+        padding: 1.2rem 1.25rem 1rem;
+        border: 1px solid rgba(169, 184, 198, 0.16);
+        border-radius: 10px;
+        background: linear-gradient(145deg, #202d39, #18232e);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+        transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 153, 0, 0.48);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
+    }
+
+    .metric-icon {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 1px solid rgba(255, 153, 0, 0.25);
+        border-radius: 10px;
+        background: rgba(255, 153, 0, 0.1);
+        color: #ffad33;
+    }
+
+    .metric-card-accent {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(255, 153, 0, 0.9), rgba(255, 153, 0, 0.08) 74%, transparent);
+    }
+
+    .glass {
+        background: linear-gradient(145deg, rgba(31, 43, 55, 0.96), rgba(22, 32, 43, 0.96));
+        border: 1px solid rgba(169, 184, 198, 0.16);
+        border-radius: 10px !important;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    .office-panel {
+        background: linear-gradient(145deg, #202d39, #18232e);
+        border: 1px solid rgba(169, 184, 198, 0.16);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+        transition: border-color 200ms ease;
+    }
+    .office-panel:hover { border-color: rgba(255, 153, 0, 0.52); }
+
+    .panel-header {
+        background: linear-gradient(90deg, #273746 0%, #202d39 100%);
+        border-bottom: 1px solid rgba(169, 184, 198, 0.14);
+        padding: 0.55rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #fff;
+    }
+    .panel-header::before {
+        content: '';
+        width: 3px;
+        height: 14px;
+        background: hsl(var(--pitch-green));
+        margin-right: 0.6rem;
+        box-shadow: 0 0 10px hsl(var(--pitch-green) / 0.45);
+    }
+
+    .glass-hover {
+        transition:
+            border-color 220ms ease,
+            transform 220ms ease,
+            background 220ms ease;
+    }
+    .glass-hover:hover {
+        border-color: rgba(255, 153, 0, 0.55);
+        transform: translateY(-2px);
+    }
+
+    .pitch-accent {
+        color: hsl(var(--pitch-glow));
+    }
+
+    .pitch-bg-accent {
+        background: hsl(var(--pitch-green));
+        color: hsl(var(--ink));
+    }
+
+    .divider-line {
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+        );
+    }
+
+    .stat-value {
+        font-family: 'Barlow Condensed', 'Rajdhani', sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        line-height: 1;
+    }
+
+    .fifa-tab {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+    }
+
+    .kbd {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #42515f; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 153, 0, 0.65); }
+
+/* Selection */
+::selection { background: hsl(var(--pitch-green) / 0.45); color: white; }
+
+/* Fade-in animation */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.fade-up-delay-1 { animation-delay: 80ms; }
+.fade-up-delay-2 { animation-delay: 160ms; }
+.fade-up-delay-3 { animation-delay: 240ms; }
+.fade-up-delay-4 { animation-delay: 320ms; }
+.fade-up-delay-5 { animation-delay: 400ms; }
+
+/* Pulse dot */
+@keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.42); }
+    50% { box-shadow: 0 0 0 8px rgba(255, 153, 0, 0); }
+}
+.pulse-dot::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: hsl(var(--pitch-green));
+    margin-right: 6px;
+    vertical-align: middle;
+    animation: pulseDot 2s infinite;
+}

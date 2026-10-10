@@ -1,0 +1,40 @@
+{
+  "summary": "Tested three new features (Player Compare, Value Predictor with OLS, Live Nation Map) end-to-end. Backend: 15 new pytest cases in test_new_features.py — 13/15 pass. Two failures on /api/value/undervalued expose a CRITICAL semantics bug: mode=undervalued returns players with ratio (pred/actual) < 1 (i.e. overvalued) and mode=overvalued returns ratio > 1 — the sort direction is inverted vs the review spec and vs the UI labels/verdicts. Frontend: /compare, /value, /nations all render correctly. Direct-link /compare?a=158023&b=20801 shows Messi vs Ronaldo, wins 15-13, radar and 29-row attribute table. Search + swap + clear work. Value page KPIs (R²=0.981, N=17,907), what-if simulator, bargain radar with mode toggle, model coefficients table and scatter all render. Nations page renders green choropleth, metric toggles work, Brazil/UK country clicks open panel; UK correctly shows 'Includes England, Wales, Scotland, Northern Ireland'. Compare drawer flow via player profile modal works: add-to-compare → drawer shows slot-0, second player → slot-1 + go-compare-btn, drawer persists across reload (localStorage), compare-now-btn navigates to /compare with both players, remove/clear buttons work. Navbar nav-compare/value/nations visible at 1920px; hamburger + mnav-* visible at 1024px. Regression on /, /explorer, /statistics: pages load with zero pageerrors.",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "GET /api/value/undervalued", "issue": "Mode semantics inverted. `mode=undervalued` returns rows where `ratio = predicted/actual < 1` (actual market price > model fair value → OVERVALUED). `mode=overvalued` returns `ratio > 1` (UNDERVALUED). Root cause: server.py line 799 `resid.sort_values(ascending=(mode != 'undervalued'))`. With residual = log(actual)-log(pred), an undervalued player (market cheap) has residual < 0. So mode='undervalued' must sort ASCENDING. Fix: change to `ascending=(mode == 'undervalued')`. This bug also flips the UI 'Bargain radar' table meaning — Cristiano Ronaldo/Messi (ratio 4.6 / 4.1) appear as top 'Overvalued' when they are model-implied undervalued vs their FIFA-listed value.", "priority": "CRITICAL"}
+    ],
+    "minor": [
+      {"endpoint": "GET /api/dataset/search", "issue": "No diacritic normalization. q='Kante' returns 0 results because dataset has 'N. Kanté'. Placeholder text on /value literally suggests 'Kanté' — user typing plain ASCII gets nothing. Recommend unicodedata.normalize('NFKD') fold on both sides."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "ValuePredictorPage Bargain radar", "issue": "Because it consumes /api/value/undervalued directly, the 'Undervalued' vs 'Overvalued' tabs are swapped in the UI. On page load 'Undervalued' shows overvalued stars (Ronaldo, Messi with 4x ratio) and vice-versa. Blocks intended feature until backend bug is fixed.", "selector": "[data-testid=undervalued-table]", "priority": "CRITICAL"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "All pages", "issues": ["cdn.sofifa.org player Photos & Flags return ERR_NAME_NOT_RESOLVED in this preview env (still unfixed from iteration_1) — dozens of broken-image icons across explorer, drawer, value lookup, nations panel and compare cards. Consider onError fallback + local placeholder."]},
+      {"screen": "Recharts containers on /compare & /value", "issues": ["Repeated 'width(-1) and height(-1) of chart' warnings on first paint — same issue as iteration_1, add min-height."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_new_features.py", "/app/test_reports/pytest/new_features.xml", "/app/backend/tests/backend_test.py"],
+  "action_items": [
+    "CRITICAL: Fix /api/value/undervalued mode inversion at server.py L799 → `resid.sort_values(ascending=(mode == 'undervalued'))`. Verify with curl: mode=undervalued top row should have ratio > 1 (market cheap vs model), mode=overvalued top row ratio < 1.",
+    "MINOR: Normalize diacritics in /api/dataset/search so 'Kante' → 'Kanté', 'Suarez' → 'Suárez'.",
+    "Still-open from iter_1: onError image fallback for cdn.sofifa.org assets; min-height on Recharts containers."
+  ],
+  "critical_code_review_comments": [
+    "server.py value_undervalued has inverted sort semantics tied directly to a business-facing label — needs a unit test around the mode/ratio invariant.",
+    "server.py NATION_TO_MAP is a manual dict — 'unmapped' returned empty is good, but new dataset versions could silently drop nations; consider logging any nationality with no mapping at startup.",
+    "PlayerSearch performs raw substring match on Name; add fold_ascii on both dataset column and query for robustness against accents.",
+    "CompareContext writes to localStorage on every state change (fine), but there's no schema/version key — an app upgrade that changes the slot shape would render prior localStorage payloads incompatible with no fallback."
+  ],
+  "updated_files": ["/app/backend/tests/test_new_features.py"],
+  "success_rate": {"backend": "87% (13/15 new + 17/18 prior)", "frontend": "~95% (all new pages/flows OK; bargain-radar labels wrong due to backend bug)"},
+  "seed_data_creation": "None — bundled fifa19.csv.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "New feature backend tests at /app/backend/tests/test_new_features.py (pytest, 15 cases). After main agent fixes value_undervalued sort direction, rerun `pytest backend/tests/test_new_features.py::TestValueModel -v` — the two failing cases (test_undervalued, test_overvalued) should pass without test changes. All frontend flows verified working with proper Escape-key modal close: compare drawer localStorage persistence confirmed. Player IDs: Messi=158023, Ronaldo=20801. UK map name = 'United Kingdom'.",
+  "rca of the issue": "value_undervalued (server.py:788-800) sorts by log-residual. VALUE_RESID is computed as log(actual) - log(predicted) (confirmed empirically: N. Kanté ratio 0.24 → residual 1.42 = ln(160000/38507)). A player is 'undervalued' in the marketing sense when actual < predicted, i.e. residual < 0. Current code: `ascending=(mode != 'undervalued')` → for mode='undervalued' this is False (descending), returning MAX residual = MAX(log(actual/pred)) = players whose market price GREATLY EXCEEDS the model = OVERVALUED. Reproduction: `curl '$BASE/api/value/undervalued?mode=undervalued&limit=1'` returns O. Pérez ratio 0.24 (pred/actual). Fix: flip the boolean → `ascending=(mode == 'undervalued')`."
+}
